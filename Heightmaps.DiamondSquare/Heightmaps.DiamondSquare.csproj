@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;netcoreapp2.0;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
+    <Title>Diamond-Square algorithm</Title>
+    <PackageId>Heightmaps.DiamondSquare</PackageId>
+    <Version>$(Version)</Version>
+    <PackageVersion>$(PackageVersion)</PackageVersion>
+    <Authors>Alexander Yermakov</Authors>
+    <PackageTags>heightmaps; diamods-square</PackageTags>
+    <PackageLicenseUrl>https://github.com/A1essandro/Heightmaps.DiamondSquare/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/A1essandro/Heightmaps.DiamondSquare</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/A1essandro/Heightmaps.DiamondSquare.git</RepositoryUrl>
+    <RootNamespace>Heightmaps.DiamondSquare</RootNamespace>
+    <PackageDescription>Creating heightmaps by Diamond-Square algorithm.</PackageDescription>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+
+</Project>

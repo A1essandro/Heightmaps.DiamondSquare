@@ -1,1 +1,1 @@
-# NetStandard.DiamondSquare
+# DiamondSquare.NetStandard
