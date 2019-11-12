@@ -5,9 +5,9 @@ namespace Heightmaps.DiamondSquare.Internal
     internal sealed class Algorithm
     {
 
-        private FactoryConfiguration _config;
-
-        private Random _rand;
+        private readonly FactoryConfiguration _config;
+        private readonly Random _rand;
+        private double[][] _heightmapContext { get; set; }
 
         public Algorithm(FactoryConfiguration config)
         {
@@ -15,28 +15,24 @@ namespace Heightmaps.DiamondSquare.Internal
             _rand = config.Seed.HasValue ? new Random(config.Seed.Value) : new Random();
         }
 
-        private double[][] Terra { get; set; }
-
-
         public double[][] Generate()
         {
-            Terra = new double[_config.Size][];
+            _heightmapContext = new double[_config.Size][];
             for (int i = 0; i < _config.Size; i++)
             {
-                Terra[i] = new double[_config.Size];
+                _heightmapContext[i] = new double[_config.Size];
             }
 
             var last = _config.Size - 1;
-            Terra[0][0] = _getOffset(_config.Size);
-            Terra[0][last] = _getOffset(_config.Size);
-            Terra[last][0] = _getOffset(_config.Size);
-            Terra[last][last] = _getOffset(_config.Size);
+            _heightmapContext[0][0] = _getOffset(_config.Size);
+            _heightmapContext[0][last] = _getOffset(_config.Size);
+            _heightmapContext[last][0] = _getOffset(_config.Size);
+            _heightmapContext[last][last] = _getOffset(_config.Size);
 
             _divide(_config.Size);
 
-            return Terra;
+            return _heightmapContext;
         }
-
 
         private void _divide(int stepSize)
         {
@@ -62,7 +58,7 @@ namespace Heightmaps.DiamondSquare.Internal
             var c = _getCellHeight(x - size, y + size, size);
             var d = _getCellHeight(x + size, y - size, size);
             var average = (a + b + c + d) / 4;
-            Terra[x][y] = average + offset;
+            _heightmapContext[x][y] = average + offset;
             _diamond(x, y - size, size);
             _diamond(x - size, y, size);
             _diamond(x, y + size, size);
@@ -77,7 +73,7 @@ namespace Heightmaps.DiamondSquare.Internal
             var c = _getCellHeight(x - size, y, size);
             var d = _getCellHeight(x + size, y, size);
             var average = (a + b + c + d) / 4;
-            Terra[x][y] = average + offset;
+            _heightmapContext[x][y] = average + offset;
         }
 
         /// <summary>
@@ -103,7 +99,7 @@ namespace Heightmaps.DiamondSquare.Internal
         {
             if (x < 0 || y < 0 || x >= _config.Size || y >= _config.Size)
                 return _getOffset(stepSize);
-            return Terra[x][y];
+            return _heightmapContext[x][y];
         }
 
     }
