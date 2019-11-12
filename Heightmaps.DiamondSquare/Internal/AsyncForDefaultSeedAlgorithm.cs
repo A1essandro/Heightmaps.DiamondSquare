@@ -1,21 +1,23 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Heightmaps.DiamondSquare.Internal
 {
-    internal sealed class Algorithm
+    public class AsyncForDefaultSeedAlgorithm : IAlgorithm
     {
 
         private readonly FactoryConfiguration _config;
         private readonly Random _rand;
         private double[][] _heightmapContext { get; set; }
 
-        public Algorithm(FactoryConfiguration config)
+        public AsyncForDefaultSeedAlgorithm(FactoryConfiguration config)
         {
             _config = config;
-            _rand = config.Seed.HasValue ? new Random(config.Seed.Value) : new Random();
+            _rand = new Random();
         }
 
-        public double[][] Generate()
+        public async Task<double[][]> Generate()
         {
             _heightmapContext = new double[_config.Size][];
             for (int i = 0; i < _config.Size; i++)
@@ -29,29 +31,32 @@ namespace Heightmaps.DiamondSquare.Internal
             _heightmapContext[last][0] = _getOffset(_config.Size);
             _heightmapContext[last][last] = _getOffset(_config.Size);
 
-            _divide(_config.Size);
+            await _divide(_config.Size);
 
             return _heightmapContext;
         }
 
-        private void _divide(int stepSize)
+        private async Task _divide(int stepSize)
         {
             int half;
             while ((half = stepSize / 2) >= 1)
             {
+                var taskList = new List<Task>();
                 for (var x = half; x < _config.Size; x += stepSize)
                 {
                     for (var y = half; y < _config.Size; y += stepSize)
                     {
-                        _square(x, y, half, _getOffset(stepSize));
+                        taskList.Add(_square(x, y, half, _getOffset(stepSize)));
                     }
                 }
+
+                await Task.WhenAll(taskList);
 
                 stepSize = half;
             }
         }
 
-        private void _square(int x, int y, int size, double offset)
+        private Task _square(int x, int y, int size, double offset)
         {
             var a = _getCellHeight(x - size, y - size, size);
             var b = _getCellHeight(x + size, y + size, size);
@@ -59,21 +64,27 @@ namespace Heightmaps.DiamondSquare.Internal
             var d = _getCellHeight(x + size, y - size, size);
             var average = (a + b + c + d) / 4;
             _heightmapContext[x][y] = average + offset;
-            _diamond(x, y - size, size);
-            _diamond(x - size, y, size);
-            _diamond(x, y + size, size);
-            _diamond(x + size, y, size);
+
+            return Task.WhenAll(
+                _diamond(x, y - size, size),
+                _diamond(x - size, y, size),
+                _diamond(x, y + size, size),
+                _diamond(x + size, y, size)
+            );
         }
 
-        private void _diamond(int x, int y, int size)
+        private Task _diamond(int x, int y, int size)
         {
-            var offset = _getOffset(size);
-            var a = _getCellHeight(x, y - size, size);
-            var b = _getCellHeight(x, y + size, size);
-            var c = _getCellHeight(x - size, y, size);
-            var d = _getCellHeight(x + size, y, size);
-            var average = (a + b + c + d) / 4;
-            _heightmapContext[x][y] = average + offset;
+            return Task.Run(() =>
+            {
+                var offset = _getOffset(size);
+                var a = _getCellHeight(x, y - size, size);
+                var b = _getCellHeight(x, y + size, size);
+                var c = _getCellHeight(x - size, y, size);
+                var d = _getCellHeight(x + size, y, size);
+                var average = (a + b + c + d) / 4;
+                _heightmapContext[x][y] = average + offset;
+            });
         }
 
         /// <summary>
@@ -101,6 +112,5 @@ namespace Heightmaps.DiamondSquare.Internal
                 return _getOffset(stepSize);
             return _heightmapContext[x][y];
         }
-
     }
 }
