@@ -1,1 +1,1 @@
-# DiamondSquare.NetStandard
+# Heightmaps.DiamondSquare
