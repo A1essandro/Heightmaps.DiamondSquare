@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heightmaps.DiamondSquare", "Heightmaps.DiamondSquare\Heightmaps.DiamondSquare.csproj", "{ED8F8304-348A-4950-B031-ED22AB7BEF58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{395667A2-7AF8-44C8-AD6C-9631604C454B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{ED8F8304-348A-4950-B031-ED22AB7BEF58}.Release|x64.Build.0 = Release|Any CPU
 		{ED8F8304-348A-4950-B031-ED22AB7BEF58}.Release|x86.ActiveCfg = Release|Any CPU
 		{ED8F8304-348A-4950-B031-ED22AB7BEF58}.Release|x86.Build.0 = Release|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Debug|x64.Build.0 = Debug|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Debug|x86.Build.0 = Debug|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Release|x64.ActiveCfg = Release|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Release|x64.Build.0 = Release|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Release|x86.ActiveCfg = Release|Any CPU
+		{395667A2-7AF8-44C8-AD6C-9631604C454B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

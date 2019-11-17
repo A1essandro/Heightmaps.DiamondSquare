@@ -1,20 +1,23 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Heightmaps.DiamondSquare.Internal;
+
+[assembly: InternalsVisibleToAttribute("Tests")]
 
 namespace Heightmaps.DiamondSquare
 {
     public class DiamondSquareHeightmapFactory
     {
 
-        private FactoryConfiguration _configuration;
+        private IConfiguration _configuration;
 
-        public DiamondSquareHeightmapFactory(FactoryConfiguration configuration = null)
+        public DiamondSquareHeightmapFactory(IConfiguration configuration = null)
         {
             _configuration = configuration;
         }
 
-        public Task<double[][]> CreateHeightMap(FactoryConfiguration configuration = null)
+        public Task<double[][]> CreateHeightMap(IConfiguration configuration = null)
         {
             if (configuration == null && _configuration == null)
                 throw new ArgumentNullException();
@@ -25,7 +28,7 @@ namespace Heightmaps.DiamondSquare
             return algorithm.Generate();
         }
 
-        private IAlgorithm _getAlgorithm(FactoryConfiguration configuration)
+        private IAlgorithm _getAlgorithm(IConfiguration configuration)
         {
             if (configuration.Seed.HasValue)
                 return new DefaultAlgorithm(configuration);

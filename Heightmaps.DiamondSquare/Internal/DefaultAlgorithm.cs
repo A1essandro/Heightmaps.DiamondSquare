@@ -6,12 +6,14 @@ namespace Heightmaps.DiamondSquare.Internal
     internal sealed class DefaultAlgorithm : IAlgorithm
     {
 
-        private readonly FactoryConfiguration _config;
+        private readonly IConfiguration _config;
         private readonly Random _rand;
+        private readonly ConfigurationValidator _configurationValidator = new ConfigurationValidator();
         private double[][] _heightmapContext { get; set; }
 
-        public DefaultAlgorithm(FactoryConfiguration config)
+        public DefaultAlgorithm(IConfiguration config)
         {
+            _configurationValidator.Validate(config);
             _config = config;
             _rand = config.Seed.HasValue ? new Random(config.Seed.Value) : new Random();
         }

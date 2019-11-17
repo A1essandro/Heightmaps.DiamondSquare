@@ -7,12 +7,14 @@ namespace Heightmaps.DiamondSquare.Internal
     public class AsyncForDefaultSeedAlgorithm : IAlgorithm
     {
 
-        private readonly FactoryConfiguration _config;
+        private readonly IConfiguration _config;
         private readonly Random _rand;
+        private readonly ConfigurationValidator _configurationValidator = new ConfigurationValidator();
         private double[][] _heightmapContext { get; set; }
 
-        public AsyncForDefaultSeedAlgorithm(FactoryConfiguration config)
+        public AsyncForDefaultSeedAlgorithm(IConfiguration config)
         {
+            _configurationValidator.Validate(config);
             _config = config;
             _rand = new Random();
         }

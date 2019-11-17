@@ -2,7 +2,7 @@
 
 namespace Heightmaps.DiamondSquare
 {
-    public class FactoryConfiguration
+    public class Configuration : IConfiguration
     {
 
         public int RawSize { get; }
@@ -13,7 +13,7 @@ namespace Heightmaps.DiamondSquare
 
         public int? Seed { get; }
 
-        public FactoryConfiguration(int rawSize, double persistence, int? seed)
+        public Configuration(int rawSize, double persistence, int? seed)
         {
             RawSize = rawSize;
             Size = (int)Math.Pow(2, RawSize + 1);
